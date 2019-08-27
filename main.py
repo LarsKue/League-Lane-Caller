@@ -80,6 +80,7 @@ def main():
 
     quitkeystr = "+".join(quitkeys)
 
+    print("Searching for League of Legends...")
     hwnd_main = 0
     while not hwnd_main:
         hwnd_main = win32gui.FindWindow(None, "League of Legends")
