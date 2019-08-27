@@ -3,6 +3,7 @@ import win32api
 import win32con
 import keyboard
 import time
+import sys
 
 
 def click(hwnd, x, y):
@@ -80,13 +81,15 @@ def main():
 
     quitkeystr = "+".join(quitkeys)
 
-    print("Searching for League of Legends...")
+    print("Searching for League of Legends...", end="")
     hwnd_main = 0
     while not hwnd_main:
         hwnd_main = win32gui.FindWindow(None, "League of Legends")
+        print(".", end="")
+        sys.stdout.flush()
         time.sleep(window_pollrate)
 
-    print("Found League of Legends!")
+    print("\nFound League of Legends!")
     print("Waiting for input...")
 
     for lane, hotkeys in hotkeylanes.items():
