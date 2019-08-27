@@ -37,6 +37,8 @@ def call_lane(hotkeys: list, hwnd_main: int, lane: str):
     for key in hotkeys:
         keyboard.press(key)
 
+    print("Called Lane:", lane)
+    print("Waiting for input...")
     time.sleep(delay)
 
 
@@ -84,6 +86,7 @@ def main():
         time.sleep(window_pollrate)
 
     print("Found League of Legends!")
+    print("Waiting for input...")
 
     for lane, hotkeys in hotkeylanes.items():
         keyboard.add_hotkey("+".join(hotkeys), call_lane, args=(hotkeys, hwnd_main, lane))
