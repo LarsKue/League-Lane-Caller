@@ -26,6 +26,22 @@ def print_special(*x, end="\n"):
     return
 
 
+def get_green_text(x):
+    """ returns green text """
+    return "\033[92m{}\033[0m".format(x)
+
+
+def reprint(*x, end="\n"):
+    """ prints in same line """
+    message = ""
+    for elem in x:
+        message += str(elem) + " "
+    # \r prints a carriage return first, so `b` is printed on top of the previous line.
+    sys.stdout.write("\r" + message[:-1])
+    sys.stdout.flush()
+    return
+
+
 def call_lane(hotkeys: list, hwnd_main: int, lane: str):
     global delay
 
@@ -33,6 +49,7 @@ def call_lane(hotkeys: list, hwnd_main: int, lane: str):
 
     # unpress all hotkeys to write the message
     for key in hotkeys:
+
         keyboard.release(key)
 
     # click into the chat window
@@ -48,8 +65,10 @@ def call_lane(hotkeys: list, hwnd_main: int, lane: str):
     for key in hotkeys:
         keyboard.press(key)
 
-    print_special("Called Lane:", lane)
-    print("Waiting for input...")
+    # print_special(lane)
+
+    reprint("Called Lane: ", get_green_text(lane))
+    # print("Waiting for input...")
     time.sleep(delay)
 
 
@@ -72,13 +91,13 @@ def get_click_point(hwnd):
     return winx + clickx, winy + clicky
 
 
-hotkeylanes = {
+lane_hotkeys = {
     "top": ["alt", "i"],
     "jgl": ["alt", "j"],
     "mid": ["alt", "k"],
     "adc": ["alt", "l"],
     "supp": ["alt", "o"],
-    "bot pre": ["alt", "p"]
+    "bot pre": ["alt", "p"],
 }
 quitkeys = ["ctrl", "alt", "q"]
 delay = 0.05
@@ -87,7 +106,7 @@ window_pollrate = 0.5
 
 
 def main():
-    global hotkeylanes, quitkeys
+    global lane_hotkeys, quitkeys
 
     quitkeystr = "+".join(quitkeys)
 
@@ -99,10 +118,15 @@ def main():
         sys.stdout.flush()
         time.sleep(window_pollrate)
 
-    print("\nFound League of Legends!")
-    print("Waiting for input...")
+    print("\nFound League of Legends!"
+          "\nHotkeys:")
 
-    for lane, hotkeys in hotkeylanes.items():
+    for lane, hotkeys in lane_hotkeys.items():
+        print("  {}: {}".format(get_green_text(lane.capitalize()), " + ".join([x.upper() for x in hotkeys])))
+
+    sys.stdout.flush()
+
+    for lane, hotkeys in lane_hotkeys.items():
         keyboard.add_hotkey("+".join(hotkeys), call_lane, args=(hotkeys, hwnd_main, lane))
 
     keyboard.wait(quitkeystr)
