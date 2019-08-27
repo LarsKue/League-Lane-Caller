@@ -16,6 +16,16 @@ def click(hwnd, x, y):
     win32api.SetCursorPos(oldpos)
 
 
+def print_special(*x, end="\n"):
+    """ prints in green """
+    print("\033[92m", end="")
+    for elem in x:
+        print(str(elem), end=" ")
+    print(end=end)
+    print("\033[0m", end="")
+    return
+
+
 def call_lane(hotkeys: list, hwnd_main: int, lane: str):
     global delay
 
@@ -38,7 +48,7 @@ def call_lane(hotkeys: list, hwnd_main: int, lane: str):
     for key in hotkeys:
         keyboard.press(key)
 
-    print("Called Lane:", lane)
+    print_special("Called Lane:", lane)
     print("Waiting for input...")
     time.sleep(delay)
 
