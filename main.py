@@ -49,8 +49,13 @@ def call_lane(hotkeys: list, hwnd_main: int, lane: str):
 
     # unpress all hotkeys to write the message
     for key in hotkeys:
-
         keyboard.release(key)
+
+    # if window is minimized, maximize it and bring it to the foreground
+    if win32gui.IsIconic(hwnd_main):
+        win32gui.ShowWindow(hwnd_main, 1)
+        time.sleep(0.5)  # Maximizing the window takes a bit
+    win32gui.SetForegroundWindow(hwnd_main)
 
     # click into the chat window
     click(hwnd_main, click_point[0], click_point[1])
@@ -109,7 +114,7 @@ def main():
 
     quitkeystr = "+".join(quitkeys)
 
-    print("Searching for League of Legends...", end="")
+    print("Searching for League of Legends..", end="")
     hwnd_main = 0
     while not hwnd_main:
         hwnd_main = win32gui.FindWindow(None, "League of Legends")
@@ -117,7 +122,7 @@ def main():
         sys.stdout.flush()
         time.sleep(window_pollrate)
 
-    print("\nFound League of Legends!"
+    print(" Found!"
           "\nHotkeys:")
 
     for lane, hotkeys in lane_hotkeys.items():
