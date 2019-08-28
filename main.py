@@ -73,22 +73,21 @@ def call_lane(hotkeys: list, hwnd_main: int, lane: str):
 
 
 def get_click_point(hwnd):
-    # window dimensions and position
+    # get window top left and bottom right positions and calculate dimensions
     rect = win32gui.GetWindowRect(hwnd)
     winx = rect[0]
     winy = rect[1]
+    winw = rect[2] - winx
+    winh = rect[3] - winy
 
-    # chat window dimensions
-    w, h = 450, 50
+    # relative center of the chat window
+    x, y = 0.14, 0.95
 
-    # chat window position
-    x, y = 30, 1000
+    # calculate center of chat window
+    clickx = winx + int(winw * x)
+    clicky = winy + int(winh * y)
 
-    # click point is in the middle of the chat
-    clickx = x + int(w/2)
-    clicky = y + int(h/2)
-
-    return winx + clickx, winy + clicky
+    return clickx, clicky
 
 
 lane_hotkeys = {
