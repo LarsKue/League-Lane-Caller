@@ -54,6 +54,7 @@ def call_lane(hotkeys: list, hwnd_main: int, lane: str):
     # if window is minimized, maximize it and bring it to the foreground
     if win32gui.IsIconic(hwnd_main):
         win32gui.ShowWindow(hwnd_main, 1)
+        reprint("Window maximized, please try again!")
         time.sleep(0.5)  # Maximizing the window takes a bit
         return
     else:
@@ -73,7 +74,7 @@ def call_lane(hotkeys: list, hwnd_main: int, lane: str):
         keyboard.press(key)
 
     # print the called lane in the console on the same line
-    reprint("Called Lane: ", get_green_text(lane))
+    reprint("Called Lane:", get_green_text(lane))
 
     time.sleep(delay)
 
