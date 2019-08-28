@@ -52,7 +52,8 @@ def call_lane(hotkeys: list, hwnd_main: int, lane: str):
         print("release", key)
         keyboard.release(key)
 
-    win32gui.SetForegroundWindow(hwnd_main)
+    # win32gui.SetForegroundWindow(hwnd_main)
+    # time.sleep(0.01)
 
     # click into the chat window
     click(hwnd_main, click_point[0], click_point[1])
