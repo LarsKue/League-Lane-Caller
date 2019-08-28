@@ -55,7 +55,9 @@ def call_lane(hotkeys: list, hwnd_main: int, lane: str):
     if win32gui.IsIconic(hwnd_main):
         win32gui.ShowWindow(hwnd_main, 1)
         time.sleep(0.5)  # Maximizing the window takes a bit
-    win32gui.SetForegroundWindow(hwnd_main)
+        return
+    else:
+        win32gui.SetForegroundWindow(hwnd_main)
 
     # click into the chat window
     click(hwnd_main, click_point[0], click_point[1])
@@ -70,10 +72,9 @@ def call_lane(hotkeys: list, hwnd_main: int, lane: str):
     for key in hotkeys:
         keyboard.press(key)
 
-    # print_special(lane)
-
+    # print the called lane in the console on the same line
     reprint("Called Lane: ", get_green_text(lane))
-    # print("Waiting for input...")
+
     time.sleep(delay)
 
 
