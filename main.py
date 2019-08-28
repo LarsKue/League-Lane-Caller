@@ -51,13 +51,6 @@ def call_lane(hotkeys: list, hwnd_main: int, lane: str):
     for key in hotkeys:
         keyboard.release(key)
 
-    # if window is minimized, maximize it and bring it to the foreground
-    if win32gui.IsIconic(hwnd_main):
-        win32gui.ShowWindow(hwnd_main, 1)
-
-    win32gui.SetForegroundWindow(hwnd_main)
-    time.sleep(0.005)
-
     # click into the chat window
     click(hwnd_main, click_point[0], click_point[1])
 
