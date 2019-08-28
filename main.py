@@ -31,7 +31,7 @@ def get_green_text(x):
     return "\033[92m{}\033[0m".format(x)
 
 
-def reprint(*x, end="\n"):
+def reprint(*x):
     """ prints in same line """
     message = ""
     for elem in x:
@@ -54,11 +54,10 @@ def call_lane(hotkeys: list, hwnd_main: int, lane: str):
     # if window is minimized, maximize it and bring it to the foreground
     if win32gui.IsIconic(hwnd_main):
         win32gui.ShowWindow(hwnd_main, 1)
-        reprint("Window maximized, please try again!")
-        time.sleep(0.5)  # Maximizing the window takes a bit
-        return
-    else:
-        win32gui.SetForegroundWindow(hwnd_main)
+        time.sleep(0.05)
+
+    win32gui.SetForegroundWindow(hwnd_main)
+    time.sleep(0.05)
 
     # click into the chat window
     click(hwnd_main, click_point[0], click_point[1])
@@ -68,6 +67,7 @@ def call_lane(hotkeys: list, hwnd_main: int, lane: str):
         keyboard.press_and_release(c)
 
     keyboard.press_and_release("enter")
+
 
     # repress the hotkeys to return to previous keyboard state
     for key in hotkeys:
